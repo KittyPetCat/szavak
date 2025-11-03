@@ -100,6 +100,138 @@ let words = [
       {"hu": "apa", "en": "father"},
       {"hu": "gyerek", "en": "child"},
       {"hu": "felnőtt", "en": "adult"}
-    ]
-  
-  
+    ];
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const startBtn = document.getElementById('start-btn');
+  const leftCol = document.getElementById('bal-column');
+  const rightCol = document.getElementById('jobb-column');
+  const successEl = document.getElementById('sikeres-probalkozasok');
+  const failEl = document.getElementById('sikeretlen-probalkozasok');
+
+  let selected = null; 
+  let success = 0;
+  let fail = 0;
+
+  startBtn.addEventListener('click', startGame);
+
+  function startGame() {
+   
+    leftCol.innerHTML = '';
+    rightCol.innerHTML = '';
+    success = 0;
+    fail = 0;
+    updateCounters();
+    selected = null;
+
+    const count = 6;
+    const max = words.length;
+    const indices = new Set();
+    while (indices.size < count) {
+      const r = Math.floor(Math.random() * max);
+      indices.add(r);
+    }
+
+    const pairs = Array.from(indices).map((i, idx) => ({ pairId: String(idx), hu: words[i].hu, en: words[i].en }));
+
+    
+    const left = [...pairs];
+   
+    const right = shuffle([...pairs]);
+
+    left.forEach(p => {
+      const btn = document.createElement('button');
+      btn.textContent = p.hu;
+      btn.className = 'szó-btn';
+      btn.dataset.pairId = p.pairId;
+      btn.dataset.side = 'left';
+      btn.addEventListener('click', handleClick);
+      leftCol.appendChild(btn);
+    });
+
+    right.forEach(p => {
+      const btn = document.createElement('button');
+      btn.textContent = p.en;
+      btn.className = 'szó-btn';
+      btn.dataset.pairId = p.pairId;
+      btn.dataset.side = 'right';
+      btn.addEventListener('click', handleClick);
+      rightCol.appendChild(btn);
+    });
+  }
+
+  function handleClick(e) {
+    const btn = e.currentTarget;
+    if (btn.disabled) return;
+    const pairId = btn.dataset.pairId;
+    const side = btn.dataset.side;
+
+    if (!selected) {
+      selected = { btn, side, pairId };
+      btn.classList.add('selected');
+      return;
+    }
+
+    
+    if (selected.btn === btn) {
+      btn.classList.remove('selected');
+      selected = null;
+      return;
+    }
+
+    
+    if (selected.side === side) {
+      selected.btn.classList.remove('selected');
+      selected = { btn, side, pairId };
+      btn.classList.add('selected');
+      return;
+    }
+
+   
+    if (selected.pairId === pairId) {
+      
+      selected.btn.classList.remove('selected');
+      selected.btn.classList.add('matched');
+      btn.classList.add('matched');
+      selected.btn.disabled = true;
+      btn.disabled = true;
+      success++;
+      updateCounters();
+
+      if (document.querySelectorAll('.szó-btn:not(:disabled)').length === 0) {
+       
+      }
+    } else {
+      
+      selected.btn.classList.add('wrong');
+      btn.classList.add('wrong');
+      fail++;
+      updateCounters();
+      setTimeout(() => {
+        selected.btn.classList.remove('wrong');
+        btn.classList.remove('wrong');
+        selected.btn.classList.remove('selected');
+        selected = null;
+      }, 700);
+      return;
+    }
+
+    selected = null;
+  }
+
+  function updateCounters() {
+    successEl.textContent = success;
+    failEl.textContent = fail;
+  }
+
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+});
+
