@@ -3,11 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="szavak.js"></script>
     <link rel="stylesheet" href="szavak.css">
-    <title>Document</title>
+    <script src="szavak.js"></script>
+    <title>Szavak párosító</title>
 </head>
 <body>
-    
+    <h1>Nyelv tanulás — Párosító</h1>
+    <button id="start-btn">Start</button>
+
+    <div id="jatek">
+        <div class="column">
+            <h2>Magyar</h2>
+            <div id="bal-column" class="buttons-column"></div>
+        </div>
+        <div class="column">
+            <h2>Angol</h2>
+            <div id="jobb-column" class="buttons-column"></div>
+        </div>
+    </div>
+
+    <div id="szó-display"></div>
+    <div id="forditas-display"></div>
+    <p>sikeres próbálkozások:</p>
+    <p id="sikeres-probalkozasok">0</p>
+    <p>sikeretlen próbálkozások:</p>
+    <p id="sikeretlen-probalkozasok">0</p>
 </body>
 </html>
