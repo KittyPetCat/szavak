@@ -30,12 +30,12 @@ body {
 }
 
 .szó-btn:hover:not(:disabled) {
-  background: #eaeaea;
+  background: #bbbbbb;
 }
 
-.szó-btn.selected {
+.szó-btn.kijelolt {
   outline: 2px solid #007bff;
-  background: #dceeff;
+  background: #a4caee;
 }
 
 .szó-btn.matched {
