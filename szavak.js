@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const successEl = document.getElementById('sikeres-probalkozasok');
   const failEl = document.getElementById('sikeretlen-probalkozasok');
 
-  let selected = null; 
+  let kijelolt = null; 
   let success = 0;
   let fail = 0;
 
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
     success = 0;
     fail = 0;
     updateCounters();
-    selected = null;
+    kijelolt = null;
 
     const count = 6;
     const max = words.length;
@@ -167,57 +167,53 @@ document.addEventListener('DOMContentLoaded', () => {
     const pairId = btn.dataset.pairId;
     const side = btn.dataset.side;
 
-    if (!selected) {
-      selected = { btn, side, pairId };
-      btn.classList.add('selected');
+    if (!kijelolt) {
+      kijelolt = { btn, side, pairId };
+      btn.classList.add('kijelolt');
       return;
     }
 
-    
-    if (selected.btn === btn) {
-      btn.classList.remove('selected');
-      selected = null;
+    if (kijelolt.btn === btn) {
+      btn.classList.remove('kijelolt');
+      kijelolt = null;
       return;
     }
 
-    
-    if (selected.side === side) {
-      selected.btn.classList.remove('selected');
-      selected = { btn, side, pairId };
-      btn.classList.add('selected');
+    if (kijelolt.side === side) {
+      kijelolt.btn.classList.remove('kijelolt');
+      kijelolt = { btn, side, pairId };
+      btn.classList.add('kijelolt');
       return;
     }
 
-   
-    if (selected.pairId === pairId) {
-      
-      selected.btn.classList.remove('selected');
-      selected.btn.classList.add('matched');
+    if (kijelolt.pairId === pairId) {
+      kijelolt.btn.classList.remove('kijelolt');
+      kijelolt.btn.classList.add('matched');
       btn.classList.add('matched');
-      selected.btn.disabled = true;
+      kijelolt.btn.disabled = true;
       btn.disabled = true;
       success++;
       updateCounters();
 
       if (document.querySelectorAll('.szó-btn:not(:disabled)').length === 0) {
-       
+        
       }
     } else {
-      
-      selected.btn.classList.add('wrong');
-      btn.classList.add('wrong');
+
+      kijelolt.btn.classList.add('téves');
+      btn.classList.add('téves');
       fail++;
       updateCounters();
       setTimeout(() => {
-        selected.btn.classList.remove('wrong');
-        btn.classList.remove('wrong');
-        selected.btn.classList.remove('selected');
-        selected = null;
+        kijelolt.btn.classList.remove('téves');
+        btn.classList.remove('téves');
+        kijelolt.btn.classList.remove('kijelolt');
+        kijelolt = null;
       }, 700);
       return;
     }
 
-    selected = null;
+    kijelolt = null;
   }
 
   function updateCounters() {

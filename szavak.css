@@ -33,7 +33,7 @@ body {
   background: #eaeaea;
 }
 
-.szó-btn.selected {
+.szó-btn.kijelolt {
   outline: 2px solid #007bff;
   background: #dceeff;
 }
