@@ -3,18 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="szavak.js"></script>
     <link rel="stylesheet" href="szavak.css">
-    <title>Document</title>
+    <script src="szavak.js"></script>
+    <title>Szavak párosító</title>
 </head>
 <body>
-    <H1>Nyelv tanulás</H1>
+    <h1>Nyelv tanulás — Párosító</h1>
     <button id="start-btn">Start</button>
+
+    <div id="game-area">
+        <div class="column">
+            <h2>Magyar</h2>
+            <div id="left-column" class="buttons-column"></div>
+        </div>
+        <div class="column">
+            <h2>Angol</h2>
+            <div id="right-column" class="buttons-column"></div>
+        </div>
+    </div>
+
     <div id="word-display"></div>
     <div id="translation-display"></div>
     <p>sikeres próbálkozások:</p>
-    <p id="successful-attempts"></p><br>
+    <p id="successful-attempts">0</p>
     <p>sikeretlen próbálkozások:</p>
-    <p id="unsuccessful-attempts"></p>
+    <p id="unsuccessful-attempts">0</p>
 </body>
 </html>
